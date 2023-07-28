@@ -68,7 +68,7 @@ const imageContainer = document.querySelector(".item__img");
 imageContainer.innerHTML = ` <img src="${product.imageUrl}" alt="${product.altTxt}">`;
 
 const btnSelector = document.querySelector("#addToCart");
-btnSelector.addEventListener("click", (event) => {
+btnSelector.addEventListener("click", (event) => {(
     const selectedColor = document.querySelector("#colors").value;
 
     const quantityString = document.querySelector("#quantity").value;
@@ -77,9 +77,12 @@ btnSelector.addEventListener("click", (event) => {
     // parseInt =< convertit une chaine de caractère en  nombre entier
     if (quantityNumber <= 0 || quantityNumber > 100) {
         // si la qté est inférieure à 0 ou supérieure à 100, on affiche un mesage d'erreur
-        alert("Veuillez selectionner un nombre entre 0 et 100");
-        return;
-    } else if (quantityNumber === "" || selectedColor === "") {
+        alert("Veuillez selectionner un nombre entre 0 et 100")
+        return;<}
+        else {
+
+        }
+
         alert("Veuillez saisir une quantité et une coleur");
         return; // permet de ne pas exécuter la suite du code, comme il y a une erreur
     }

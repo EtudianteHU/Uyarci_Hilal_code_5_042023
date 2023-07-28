@@ -77,13 +77,16 @@ btnSelector.addEventListener("click", (event) => {
     // parseInt =< convertit une chaine de caractère en  nombre entier
     if (quantityNumber <= 0 || quantityNumber > 100) {
         // si la qté est inférieure à 0 ou supérieure à 100, on affiche un mesage d'erreur
-        alert("Veuillez selectionner un nombre entre 0 et 100");
+        alert("Veuillez selectionner un nombre entre 0 et 100")
         return;
-    } else if (quantityNumber === "" || selectedColor === "") {
+        else ( 
+            quantityNumber === "" || selectedColor === "")
+        { 
+    
         alert("Veuillez saisir une quantité et une coleur");
         return; // permet de ne pas exécuter la suite du code, comme il y a une erreur
     }
-
+    }
     const panierInString = localStorage.getItem("panier") || "[]"; // soit on récupère la valeur du panier dans le local storage, soit on met un tableau vide
 
     const panierObject = JSON.parse(panierInString); // meme chose :  JSON.parse(localStorage.getItem('panier'))

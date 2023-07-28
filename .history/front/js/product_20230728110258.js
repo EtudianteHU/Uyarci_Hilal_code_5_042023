@@ -75,11 +75,9 @@ btnSelector.addEventListener("click", (event) => {
 
     const quantityNumber = parseInt(quantityString);
     // parseInt =< convertit une chaine de caractère en  nombre entier
-    if (quantityNumber <= 0 || quantityNumber > 100) {
+    if (quantityNumber <= 0 || quantityNumber > 100 || ) {
         // si la qté est inférieure à 0 ou supérieure à 100, on affiche un mesage d'erreur
-        alert("Veuillez selectionner un nombre entre 0 et 100");
-        return;
-    } else if (quantityNumber === "" || selectedColor === "") {
+
         alert("Veuillez saisir une quantité et une coleur");
         return; // permet de ne pas exécuter la suite du code, comme il y a une erreur
     }
