@@ -100,7 +100,7 @@ inputsQuantity.forEach((input) => {
 const deleteLinks = document.querySelectorAll(".deleteItem");
 
 deleteLinks.forEach((link) => {
-    link.addEventListener("click", async (event) => {
+    link.addEventListener("click", (event) => {
         const dom = event.target;
         const article = dom.closest("article");
         const id = article.getAttribute("data-id");
@@ -132,6 +132,9 @@ deleteLinks.forEach((link) => {
             price += panier.quantity * product.price;
         }
         totalPricePanier.innerHTML = price;
+        // on va supprimer le produit du localqtorage
+        // puis on va mettre à jour le prix et la quantité totale
+        // et on supprimant la ligne du panier
     });
 });
 
@@ -262,7 +265,7 @@ function submitForm(e) {
     // Validation de l'email
     function isEmailInValid(ValidField) {
         const email = document.querySelector("#email");
-        const regex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
+        const regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
         let emailErrorMsg = email.nextElementSibling;
         if (regex.test(email.value) === false) {
             emailErrorMsg.innerHTML = " Veuillez renseigner votre email.";
@@ -276,7 +279,7 @@ function submitForm(e) {
     function isAddressInValid(ValidField) {
         const address = document.querySelector("#address");
         const regex =
-            /^[a-zA-Z0-9àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ\s,'-]*$/;
+            /^[a-zA-Z0-9àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ\s\,\'\-]*$/;
         let addressErrorMsg = address.nextElementSibling;
         if (regex.test(address.value) === false) {
             addressErrorMsg.innerHTML = " Veuillez renseigner votre adresse.";

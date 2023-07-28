@@ -80,9 +80,11 @@ btnSelector.addEventListener("click", (event) => {
             alert("Veuillez saisir une quantité valide (nombre entier).");
         }
         if (quantityNumber <= 0) {
+            quantityNumber = 1;
             event.currentTarget.value = 1;
             alert("La quantité doit être supérieur à zéro.");
         } else if (quantityNumber > 100) {
+            quantityNumber = 100;
             event.currentTarget.value = 100;
             alert("La quantité ne peut pas dépasser 100.");
         }

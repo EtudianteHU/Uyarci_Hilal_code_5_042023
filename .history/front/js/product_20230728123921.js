@@ -55,6 +55,12 @@ product.colors.forEach((element) => {
 });
 
 // identique à ce que l'on a fait au dessus :
+/* const colors = products.colors 
+colors.forEach((element) => {
+    // le + permet de faire une concaténation, c'est à dire de conserver les données que l'on a ajoutée lors des précédentes itérations. Si on ne le met pas, alors notre liste déroulante que la dernière couleur et pas l'ensemble des couelurs
+    console.log('couleur courante : ', element)
+    optionContainer.innerHTML = ` <option value="${element}">${element}</option>`
+})*/
 
 // Récupération de l'élément .item__img dans L'HTML
 const imageContainer = document.querySelector(".item__img");
@@ -80,9 +86,11 @@ btnSelector.addEventListener("click", (event) => {
             alert("Veuillez saisir une quantité valide (nombre entier).");
         }
         if (quantityNumber <= 0) {
+            quantityNumber = 1;
             event.currentTarget.value = 1;
             alert("La quantité doit être supérieur à zéro.");
         } else if (quantityNumber > 100) {
+            quantityNumber = 100;
             event.currentTarget.value = 100;
             alert("La quantité ne peut pas dépasser 100.");
         }

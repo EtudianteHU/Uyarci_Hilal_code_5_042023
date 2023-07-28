@@ -55,6 +55,12 @@ product.colors.forEach((element) => {
 });
 
 // identique à ce que l'on a fait au dessus :
+/* const colors = products.colors 
+colors.forEach((element) => {
+    // le + permet de faire une concaténation, c'est à dire de conserver les données que l'on a ajoutée lors des précédentes itérations. Si on ne le met pas, alors notre liste déroulante que la dernière couleur et pas l'ensemble des couelurs
+    console.log('couleur courante : ', element)
+    optionContainer.innerHTML = ` <option value="${element}">${element}</option>`
+})*/
 
 // Récupération de l'élément .item__img dans L'HTML
 const imageContainer = document.querySelector(".item__img");
@@ -69,28 +75,16 @@ btnSelector.addEventListener("click", (event) => {
 
     let quantityNumber = parseInt(quantityString);
     // parseInt =< convertit une chaine de caractère en  nombre entier
-    if (
-        isNaN(quantityNumber) ||
-        quantityNumber <= 0 ||
-        quantityNumber > 100 ||
-        selectedColor === ""
-    ) {
+    if (isNaN(quantityNumber) || quantityNumber <= 0 || quantityNumber > 100 || selectedColor === "") {
         // si la qté est inférieure à 0 ou supérieure à 100, on affiche un mesage d'erreur
-        if (isNaN(quantityNumber)) {
-            alert("Veuillez saisir une quantité valide (nombre entier).");
-        }
-        if (quantityNumber <= 0) {
-            event.currentTarget.value = 1;
-            alert("La quantité doit être supérieur à zéro.");
-        } else if (quantityNumber > 100) {
-            event.currentTarget.value = 100;
-            alert("La quantité ne peut pas dépasser 100.");
-        }
-        if (selectedColor === "") {
-            alert("Veuillez sélectionner une couleur.");
-        }
-
-        return; //Permet de ne pas éxecuter la suite du code, comme il y a une erreur
+    if (isNaN(quantityNumber)) {
+        alert("Veuillez saisir une quantité valide (nombre entier).");
+    }
+    if (quantityNumber <= 0) {
+        quantityNumber = 1
+        event.currentTarget.value = 1;
+        alert("La quantité doit être supérieur à zéro.");
+    } else
     }
     const panierInString = localStorage.getItem("panier") || "[]"; // soit on récupère la valeur du panier dans le local storage, soit on met un tableau vide
 
@@ -117,5 +111,5 @@ btnSelector.addEventListener("click", (event) => {
     }
 
     localStorage.setItem("panier", JSON.stringify(panierObject)); // JSON.stringiy permet de convertir un objet/tableau en chaine de caractères. C'est l'inverse de JSON.parse
-    alert("Le produit a été ajouté au panier.");
+    alert("La produit a été commandé");
 });

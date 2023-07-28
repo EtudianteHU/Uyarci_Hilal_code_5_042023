@@ -72,8 +72,9 @@ inputsQuantity.forEach((input) => {
         panierObject.forEach((product) => {
             quantity += product.quantity;
         });
-        totalQuantityPanier.innerHTML = quantity;
-
+        totalQuantityPanier.innerHTML = quantity;{
+            if ( totalQuantityPanier =>)
+        }
         localStorage.setItem("panier", JSON.stringify(panierObject));
 
         let price = 0;
@@ -100,38 +101,39 @@ inputsQuantity.forEach((input) => {
 const deleteLinks = document.querySelectorAll(".deleteItem");
 
 deleteLinks.forEach((link) => {
-    link.addEventListener("click", async (event) => {
+    link.addEventListener("click", (event) => {
         const dom = event.target;
         const article = dom.closest("article");
         const id = article.getAttribute("data-id");
         const color = article.getAttribute("data-color");
 
-        //Trouver l'index du produit dans le tableau panierObjet
-        const indexToDelete = panierObject.findIndex(
-            (panier) => panier.id === id && panier.color === color
+        const filteredProducts = panierObject.filter(
+            (panier) => panier.id !== id && panier.color !== color
         );
 
-        if (indexToDelete !== -1) {
-            panierObject.splice(indexToDelete, 1); //Supprimer l'élement du tableau
-            localStorage.setItem("panier", JSON.stringify(panierObject));
-        }
+        localStorage.setItem("panier", JSON.stringify(filteredProducts));
 
-        article.remove(); //Supprime directement l'article sans passer par le parent.
+        const section = article.parentElement;
 
-        // Met à jour la quantité totale
+        section.removeChild(article);
+        // calcul quantité totale
         let quantity = 0;
         panierObject.forEach((product) => {
             quantity += product.quantity;
         });
         totalQuantityPanier.innerHTML = quantity;
 
-        // Met à jour le prix total
+        // calcul prix
         let price = 0;
-        for (const panier of panierObject) {
+        panierObject.forEach(async (panier) => {
             const product = await getProduct(panier.id);
             price += panier.quantity * product.price;
-        }
-        totalPricePanier.innerHTML = price;
+            totalPricePanier.innerHTML = price;
+        });
+        location.reload();
+        // on va supprimer le produit du localqtorage
+        // puis on va mettre à jour le prix et la quantité totale
+        // et on supprimant la ligne du panier
     });
 });
 
@@ -235,13 +237,9 @@ function submitForm(e) {
         const firstName = document.querySelector("#firstName");
         const regex =
             /^[a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîï]+([-'\s][a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîï]+)?$/;
-        let firstNameErrorMsg = firstName.nextElementSibling;
-
         if (regex.test(firstName.value) === false) {
-            firstNameErrorMsg.innerHTML = " Veuillez renseigner votre prénom.";
-            ValidField = false;
-        } else {
-            firstNameErrorMsg.innerHTML = ""; //Retirer le message d'érreur quand le champ est valide.
+            alert("Please enter a valid prenom");
+            return false;
         }
         return ValidField;
     }
@@ -250,25 +248,19 @@ function submitForm(e) {
         const lastName = document.querySelector("#lastName");
         const regex =
             /^[a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîï]+([-'\s][a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîï]+)?$/;
-        let lastNameErrorMsg = lastName.nextElementSibling;
         if (regex.test(lastName.value) === false) {
-            lastNameErrorMsg.innerHTML = " Veuillez renseigner votre nom.";
-            ValidField = false;
-        } else {
-            lastNameErrorMsg.innerHTML = ""; //Retirer le message d'érreur quand le champ est valide.
+            alert("Veuillez entrez un nom valide");
+            return false;
         }
         return ValidField;
     }
     // Validation de l'email
     function isEmailInValid(ValidField) {
         const email = document.querySelector("#email");
-        const regex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
-        let emailErrorMsg = email.nextElementSibling;
+        const regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
         if (regex.test(email.value) === false) {
-            emailErrorMsg.innerHTML = " Veuillez renseigner votre email.";
-            ValidField = false;
-        } else {
-            emailErrorMsg.innerHTML = ""; //Retirer le message d'érreur quand le champ est valide.
+            alert("Veuillez entrer un email valide");
+            return false;
         }
         return ValidField;
     }
@@ -276,13 +268,10 @@ function submitForm(e) {
     function isAddressInValid(ValidField) {
         const address = document.querySelector("#address");
         const regex =
-            /^[a-zA-Z0-9àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ\s,'-]*$/;
-        let addressErrorMsg = address.nextElementSibling;
+            /^[a-zA-Z0-9àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ\s\,\'\-]*$/;
         if (regex.test(address.value) === false) {
-            addressErrorMsg.innerHTML = " Veuillez renseigner votre adresse.";
-            ValidField = false;
-        } else {
-            addressErrorMsg.innerHTML = ""; //Retirer le message d'érreur quand le champ est valide.
+            alert("Veuillez entrer une adresse valide");
+            return false;
         }
         return ValidField;
     }
@@ -290,12 +279,9 @@ function submitForm(e) {
         const city = document.querySelector("#city");
         const regex =
             /^[a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîï]+([-'\s][a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîï]+)?$/;
-        let cityErrorMsg = city.nextElementSibling;
         if (regex.test(city.value) === false) {
-            cityErrorMsg.innerHTML = " Veuillez renseigner votre ville.";
-            ValidField = false;
-        } else {
-            cityErrorMsg.innerHTML = ""; //Retirer le message d'érreur quand le champ est valide.
+            alert("Veuillez entrer une ville valide");
+            return false;
         }
         return ValidField;
     }

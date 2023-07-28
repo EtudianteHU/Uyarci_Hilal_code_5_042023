@@ -262,7 +262,7 @@ function submitForm(e) {
     // Validation de l'email
     function isEmailInValid(ValidField) {
         const email = document.querySelector("#email");
-        const regex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
+        const regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
         let emailErrorMsg = email.nextElementSibling;
         if (regex.test(email.value) === false) {
             emailErrorMsg.innerHTML = " Veuillez renseigner votre email.";
