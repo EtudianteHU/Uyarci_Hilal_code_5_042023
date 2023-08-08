@@ -108,7 +108,7 @@ btnSelector.addEventListener("click", (event) => {
             quantity: quantityNumber,
         });
         localStorage.setItem("panier", JSON.stringify(panierObject));
-        alert("Le produit a été ajouté au panier.");
+        SpeechRecognitionAlternative("Le produit a été ajouté au panier.");
     } else {
         //Le produit est déjà dans le panier, met à jour la quantité
         const newTotalQuantity = productFound.quantity + quantityNumber;
@@ -116,9 +116,9 @@ btnSelector.addEventListener("click", (event) => {
         if (newTotalQuantity > 100) {
             alert("La quantité totale ne peut pas dépasser 100.");
         } else {
+
             productFound.quantity = newTotalQuantity;
-            localStorage.setItem("panier", JSON.stringify(panierObject));
-            alert("Le produit n'a pas été ajouté au panier.");
+            localStorage.setItem("panier", JSON.stringify(panierObject))
         }
     }
 });

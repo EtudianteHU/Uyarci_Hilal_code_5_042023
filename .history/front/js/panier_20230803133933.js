@@ -55,7 +55,9 @@ await Promise.all(
 );
 
 // on va mettre à jour la quantité  et le prix dans la ligne total
-const inputsQuantity = document.querySelectorAll(".itemQuantity");
+const inputsQuantity =
+
+document.querySelectorAll(".itemQuantity");
 
 inputsQuantity.forEach((input) => {
     input.addEventListener("change", (event) => {
@@ -67,7 +69,7 @@ inputsQuantity.forEach((input) => {
             (panier) => panier.id === id && panier.color === color
         );
 
-        productFound.quantityNumber = parseInt(event.target.value);
+        productFound.quantity = parseInt(event.target.value);
         let quantity = 0;
         panierObject.forEach((product) => {
             quantity += product.quantity;
@@ -204,18 +206,7 @@ function submitForm(e) {
                 res.json().then((data) => {
                     //Vidé le panier après l'envoi de la commande
                     clearCart();
-                    // Vérifier s'il reste des produits dans le panier
-                    const remainingProducts = panierObject.length;
-                    if (remainingProducts === 0) {
-                        // Désactiver le bouton de commande s'il n'y a plus de produits dans le panier
-                        const commandButton = document.getElementById("order");
-                        commandButton.disabled = true;
-                        alert(
-                            "Votre panier est vide. Ajoutez des produits avant de passer une commande."
-                        );
-                    } else {
-                        window.location.href = `confirmation.html?orderId=${data.orderId}`;
-                    }
+                    window.location.href = `confirmation.html?orderId=${data.orderId}`;
                 })
             )
             .catch((data) => console.log(data));

@@ -114,6 +114,7 @@ deleteLinks.forEach((link) => {
         if (indexToDelete !== -1) {
             panierObject.splice(indexToDelete, 1); //Supprimer l'élement du tableau
             localStorage.setItem("panier", JSON.stringify(panierObject));
+        
         }
 
         article.remove(); //Supprime directement l'article sans passer par le parent.
@@ -204,18 +205,8 @@ function submitForm(e) {
                 res.json().then((data) => {
                     //Vidé le panier après l'envoi de la commande
                     clearCart();
-                    // Vérifier s'il reste des produits dans le panier
-                    const remainingProducts = panierObject.length;
-                    if (remainingProducts === 0) {
-                        // Désactiver le bouton de commande s'il n'y a plus de produits dans le panier
-                        const commandButton = document.getElementById("order");
-                        commandButton.disabled = true;
-                        alert(
-                            "Votre panier est vide. Ajoutez des produits avant de passer une commande."
-                        );
-                    } else {
-                        window.location.href = `confirmation.html?orderId=${data.orderId}`;
-                    }
+
+                    window.location.href = `confirmation.html?orderId=${data.orderId}`;
                 })
             )
             .catch((data) => console.log(data));

@@ -83,7 +83,7 @@ btnSelector.addEventListener("click", (event) => {
             quantityNumber = 1;
             alert("La quantité doit être supérieur à zéro.");
         } else if (quantityNumber > 100) {
-            quantityNumber = 100;
+           quantityNumber = 100;
             alert("La quantité ne peut pas dépasser 100.");
         }
         if (selectedColor === "") {
@@ -102,23 +102,20 @@ btnSelector.addEventListener("click", (event) => {
 
     if (productFound === undefined) {
         // ajouter le produit au panier
-        panierObject.push({
+
+        const productToAdd = {
             id: id,
             color: selectedColor,
             quantity: quantityNumber,
-        });
-        localStorage.setItem("panier", JSON.stringify(panierObject));
-        alert("Le produit a été ajouté au panier.");
+        };
+        // push permet d'ajouter un élément à un tableau
+        panierObject.push(productToAdd);
     } else {
-        //Le produit est déjà dans le panier, met à jour la quantité
-        const newTotalQuantity = productFound.quantity + quantityNumber;
+        // mettre à jour la quantité
 
-        if (newTotalQuantity > 100) {
-            alert("La quantité totale ne peut pas dépasser 100.");
-        } else {
-            productFound.quantity = newTotalQuantity;
-            localStorage.setItem("panier", JSON.stringify(panierObject));
-            alert("Le produit n'a pas été ajouté au panier.");
-        }
+        productFound.quantity = productFound.quantity + quantityNumber; // on ajoute la nouvelle quantité sélectionnée à l'ancienne
     }
+
+    localStorage.setItem("panier", JSON.stringify(panierObject)); // JSON.stringiy permet de convertir un objet/tableau en chaine de caractères. C'est l'inverse de JSON.parse
+    alert("Le produit a été ajouté au panier.");
 });

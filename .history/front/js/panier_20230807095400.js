@@ -68,18 +68,18 @@ inputsQuantity.forEach((input) => {
         );
 
         productFound.quantityNumber = parseInt(event.target.value);
-        let quantity = 0;
+        let quantityNumber = 0;
         panierObject.forEach((product) => {
-            quantity += product.quantity;
+            quantityNumber += product.quantityNumber;
         });
-        totalQuantityPanier.innerHTML = quantity;
+        totalQuantityPanier.innerHTML = quantityNumber;
 
         localStorage.setItem("panier", JSON.stringify(panierObject));
 
         let price = 0;
         panierObject.forEach(async (panier) => {
             const product = await getProduct(panier.id);
-            price += panier.quantity * product.price;
+            price += panier.quantity* product.price;
             totalPricePanier.innerHTML = price;
         });
         location.reload();
@@ -204,18 +204,7 @@ function submitForm(e) {
                 res.json().then((data) => {
                     //Vidé le panier après l'envoi de la commande
                     clearCart();
-                    // Vérifier s'il reste des produits dans le panier
-                    const remainingProducts = panierObject.length;
-                    if (remainingProducts === 0) {
-                        // Désactiver le bouton de commande s'il n'y a plus de produits dans le panier
-                        const commandButton = document.getElementById("order");
-                        commandButton.disabled = true;
-                        alert(
-                            "Votre panier est vide. Ajoutez des produits avant de passer une commande."
-                        );
-                    } else {
-                        window.location.href = `confirmation.html?orderId=${data.orderId}`;
-                    }
+                    window.location.href = `confirmation.html?orderId=${data.orderId}`;
                 })
             )
             .catch((data) => console.log(data));

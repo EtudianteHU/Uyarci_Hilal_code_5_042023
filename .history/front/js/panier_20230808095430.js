@@ -208,7 +208,7 @@ function submitForm(e) {
                     const remainingProducts = panierObject.length;
                     if (remainingProducts === 0) {
                         // Désactiver le bouton de commande s'il n'y a plus de produits dans le panier
-                        const commandButton = document.getElementById("order");
+                        const commandButton = document.getElementById("#order");
                         commandButton.disabled = true;
                         alert(
                             "Votre panier est vide. Ajoutez des produits avant de passer une commande."
@@ -309,5 +309,15 @@ function submitForm(e) {
             cityErrorMsg.innerHTML = ""; //Retirer le message d'érreur quand le champ est valide.
         }
         return ValidField;
+    }
+    // Vérifier s'il reste des produits dans le panier
+    const remainingProducts = panierObject.length;
+    if (remainingProducts === 0) {
+        // Désactiver le bouton de commande s'il n'y a plus de produits dans le panier
+        const commandButton = document.getElementById("#order");
+        commandButton.disabled = true;
+        alert(
+            "Votre panier est vide. Ajoutez des produits avant de passer une commande."
+        );
     }
 }

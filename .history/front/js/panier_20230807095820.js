@@ -71,6 +71,23 @@ inputsQuantity.forEach((input) => {
         let quantity = 0;
         panierObject.forEach((product) => {
             quantity += product.quantity;
+            if (
+                isNaN(quantity) ||
+                quantity <= 0 ||
+                quantity > 100 ||
+            
+            ) {
+                // si la qté est inférieure à 0 ou supérieure à 100, on affiche un mesage d'erreur
+                if (isNaN(quantityNumber)) {
+                    alert("Veuillez saisir une quantité valide (nombre entier).");
+                }
+                if (quantityNumber <= 0) {
+                    event.currentTarget.value = 1;
+                    alert("La quantité doit être supérieur à zéro.");
+                } else if (quantityNumber > 100) {
+                    event.currentTarget.value = 100;
+                    alert("La quantité ne peut pas dépasser 100.");
+                }
         });
         totalQuantityPanier.innerHTML = quantity;
 
@@ -204,18 +221,7 @@ function submitForm(e) {
                 res.json().then((data) => {
                     //Vidé le panier après l'envoi de la commande
                     clearCart();
-                    // Vérifier s'il reste des produits dans le panier
-                    const remainingProducts = panierObject.length;
-                    if (remainingProducts === 0) {
-                        // Désactiver le bouton de commande s'il n'y a plus de produits dans le panier
-                        const commandButton = document.getElementById("order");
-                        commandButton.disabled = true;
-                        alert(
-                            "Votre panier est vide. Ajoutez des produits avant de passer une commande."
-                        );
-                    } else {
-                        window.location.href = `confirmation.html?orderId=${data.orderId}`;
-                    }
+                    window.location.href = `confirmation.html?orderId=${data.orderId}`;
                 })
             )
             .catch((data) => console.log(data));

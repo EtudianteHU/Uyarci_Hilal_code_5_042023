@@ -114,7 +114,30 @@ deleteLinks.forEach((link) => {
         if (indexToDelete !== -1) {
             panierObject.splice(indexToDelete, 1); //Supprimer l'élement du tableau
             localStorage.setItem("panier", JSON.stringify(panierObject));
+            // Vérifier s'il reste des produits dans le panier
+            const remainingProducts = panierObject.length;
+            if (remainingProducts === 0) {
+                // Désactiver le bouton de commande s'il n'y a plus de produits dans le panier
+                const commandButton = document.getElementById("#order"); // Remplacez "commandButton" par l'ID de votre bouton de commande
+                commandButton.disabled = true;
+                alert(
+                    "Votre panier est vide. Ajoutez des produits avant de passer une commande."
+                );
+                // Afficher un message ou une notification pour informer l'utilisateur
+                // par exemple :
+                // alert("Votre panier est vide. Ajoutez des produits avant de passer une commande.");
+            }
         }
+    });
+});
+Assurez-vous que vous avez correctement remplacé "order" par l'ID réel de votre bouton de commande dans la ligne où le bouton est sélectionné.
+
+Avec ce code complet, l'écouteur d'événement sera correctement attaché aux éléments avec la classe "deleteItem", et lorsque vous supprimez un élément du panier, le bouton de commande sera désactivé s'il n'y a plus de produits dans le panier, et un message d'alerte sera affiché pour informer l'utilisateur qu'il doit ajouter des produits avant de passer une commande.
+
+
+
+
+
 
         article.remove(); //Supprime directement l'article sans passer par le parent.
 
@@ -204,18 +227,7 @@ function submitForm(e) {
                 res.json().then((data) => {
                     //Vidé le panier après l'envoi de la commande
                     clearCart();
-                    // Vérifier s'il reste des produits dans le panier
-                    const remainingProducts = panierObject.length;
-                    if (remainingProducts === 0) {
-                        // Désactiver le bouton de commande s'il n'y a plus de produits dans le panier
-                        const commandButton = document.getElementById("order");
-                        commandButton.disabled = true;
-                        alert(
-                            "Votre panier est vide. Ajoutez des produits avant de passer une commande."
-                        );
-                    } else {
-                        window.location.href = `confirmation.html?orderId=${data.orderId}`;
-                    }
+                    window.location.href = `confirmation.html?orderId=${data.orderId}`;
                 })
             )
             .catch((data) => console.log(data));

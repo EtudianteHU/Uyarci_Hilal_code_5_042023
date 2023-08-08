@@ -209,6 +209,7 @@ function submitForm(e) {
                     if (remainingProducts === 0) {
                         // Désactiver le bouton de commande s'il n'y a plus de produits dans le panier
                         const commandButton = document.getElementById("order");
+                        console.log("Command button element:", commandButton);
                         commandButton.disabled = true;
                         alert(
                             "Votre panier est vide. Ajoutez des produits avant de passer une commande."

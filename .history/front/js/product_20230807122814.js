@@ -116,6 +116,7 @@ btnSelector.addEventListener("click", (event) => {
         if (newTotalQuantity > 100) {
             alert("La quantité totale ne peut pas dépasser 100.");
         } else {
+
             productFound.quantity = newTotalQuantity;
             localStorage.setItem("panier", JSON.stringify(panierObject));
             alert("Le produit n'a pas été ajouté au panier.");

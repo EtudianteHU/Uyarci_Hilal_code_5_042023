@@ -107,8 +107,6 @@ btnSelector.addEventListener("click", (event) => {
             color: selectedColor,
             quantity: quantityNumber,
         });
-        localStorage.setItem("panier", JSON.stringify(panierObject));
-        alert("Le produit a été ajouté au panier.");
     } else {
         //Le produit est déjà dans le panier, met à jour la quantité
         const newTotalQuantity = productFound.quantity + quantityNumber;
@@ -117,8 +115,6 @@ btnSelector.addEventListener("click", (event) => {
             alert("La quantité totale ne peut pas dépasser 100.");
         } else {
             productFound.quantity = newTotalQuantity;
-            localStorage.setItem("panier", JSON.stringify(panierObject));
-            alert("Le produit n'a pas été ajouté au panier.");
         }
     }
 });

@@ -98,6 +98,7 @@ inputsQuantity.forEach((input) => {
 
 // on  va supprimer le produit
 const deleteLinks = document.querySelectorAll(".deleteItem");
+const commandButton = document.getElementBy
 
 deleteLinks.forEach((link) => {
     link.addEventListener("click", async (event) => {
@@ -204,18 +205,7 @@ function submitForm(e) {
                 res.json().then((data) => {
                     //Vidé le panier après l'envoi de la commande
                     clearCart();
-                    // Vérifier s'il reste des produits dans le panier
-                    const remainingProducts = panierObject.length;
-                    if (remainingProducts === 0) {
-                        // Désactiver le bouton de commande s'il n'y a plus de produits dans le panier
-                        const commandButton = document.getElementById("order");
-                        commandButton.disabled = true;
-                        alert(
-                            "Votre panier est vide. Ajoutez des produits avant de passer une commande."
-                        );
-                    } else {
-                        window.location.href = `confirmation.html?orderId=${data.orderId}`;
-                    }
+                    window.location.href = `confirmation.html?orderId=${data.orderId}`;
                 })
             )
             .catch((data) => console.log(data));
