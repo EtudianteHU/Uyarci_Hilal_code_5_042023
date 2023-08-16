@@ -115,10 +115,12 @@ btnSelector.addEventListener("click", (event) => {
 
         if (newTotalQuantity <= 100) {
             productFound.quantity = newTotalQuantity;
-            localStorage.setItem("panier", JSON.stringify(panierObject));
-            alert("Le produit a été ajouté au panier.");
+            localStorage.setItem("panier", JSON.stringify(pani))
+            alert("La quantité totale ne peut pas dépasser 100.");
         } else {
-            alert("La quantité totale du même produit ne peut pas dépasser 100 dans le panier. Le produit n'a pas été ajouté au panier.");
+            productFound.quantity = newTotalQuantity;
+            localStorage.setItem("panier", JSON.stringify(panierObject));
+            alert("Le produit n'a pas été ajouté au panier.");
         }
     }
 });

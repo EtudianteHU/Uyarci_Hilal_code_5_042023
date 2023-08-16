@@ -66,20 +66,20 @@ inputsQuantity.forEach((input) => {
         const productFound = panierObject.find(
             (panier) => panier.id === id && panier.color === color
         );
-        //Obtenir la nouvelle valeur de quantité
-        let newQuantity = parseInt(event.target.value);
-        //Verifie si la valeur de la nouvelle quantité est comprise entre 1 et 100.
-        if (newQuantity < 1) {
-            newQuantity = 1;
-            alert("La quantité doit être comprise entre 1 et 100.");
-        } else if (newQuantity > 100) {
-            newQuantity = 100;
-            alert("La quantité doit être comprise entre 1 et 100.");
-        }
-        //Ajuste la nouvelle quantité et la met à jour.
-        event.target.value = newQuantity;
 
-        productFound.quantity = newQuantity;
+            let newQuantity = parseInt(event.target.value);
+
+            if (newQuantity < 1) {
+                newQuantity = 1;
+                alert("La quantité doit être comprise entre 1 et 100.");
+            } else if (newQuantity > 100) {
+                newQuantity = 100;
+                alert("La quantité doit être comprise entre 1 et 100.");
+            }
+
+            event.target.value = newQuantity
+
+        productFound.quantityNumber = parseInt(event.target.value);
         let quantity = 0;
         panierObject.forEach((product) => {
             quantity += product.quantity;
@@ -94,6 +94,7 @@ inputsQuantity.forEach((input) => {
             price += panier.quantity * product.price;
             totalPricePanier.innerHTML = price;
         });
+        location.reload();
         // on va mettre à jour la quantité dans le localStorage (objet panierObject => rechercher la bonne ligne avec la méthode find (ex: dans la page product), puis un efois que l'on a récupéré le produit, on met à jour le champ "quantité" et on sauvegarde les modification localStorage.setItem)
         // on va mettre à jour la quantité dans la ligne total (mettre à jour la quantité dans  totalQuantityPanier.inerhtml et totalPricePanier)
         // et on va mettre à jour le prix (total et pour le produit)
@@ -196,20 +197,15 @@ function getIdsFromCache() {
 // on redirige vers une autre page
 function submitForm(e) {
     e.preventDefault();
-    //Récupérez les articles du panier à partir du stockage local
-    const cartItems = JSON.parse(localStorage.getItem("panier")) || [];
+    if (cart__items.length === 0)
+        alert("Veuillez sélectionner les articles à acheter");
 
-    if (cartItems.length === 0) {
-        alert("Veuillez sélectionner les articles à acheter !");
-        return; //Empêcher la poursuite de l'execution si le panier est vide
-    }
+    const body = makeRequestBody();
 
     // validation de données
     let validForm = true;
     validForm = isFormInValid();
     if (validForm === true) {
-        const body = makeRequestBody();
-
         fetch("http://localhost:3000/api/products/order", {
             method: "POST",
             body: JSON.stringify(body),
@@ -221,22 +217,20 @@ function submitForm(e) {
                 res.json().then((data) => {
                     //Vidé le panier après l'envoi de la commande
                     clearCart();
+
                     window.location.href = `confirmation.html?orderId=${data.orderId}`;
                 })
             )
             .catch((data) => console.log(data));
     }
-
-    let isAlertShown = false;
-
     function isFormInValid() {
         const form = document.querySelector(".cart__order__form");
         const inputs = form.querySelectorAll("input");
         let isValidForm = true;
         inputs.forEach((input) => {
             if (input.value === "") {
-                alert("Veuillez remplir tous les champs.");
-                isAlertShown = true;
+                alert("Veuillez remplir tous les champs");
+                isValidForm = false;
             }
         });
         if (!isValidForm) {
@@ -254,7 +248,7 @@ function submitForm(e) {
     function isPrenomInValid(ValidField) {
         const firstName = document.querySelector("#firstName");
         const regex =
-            /^[a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîïA-ZÉÈÎÏ][a-zéèêàçîïA-ZÉÈÎÏ]+([-'\s][a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîïA-ZÉÈÎÏ]+)?$/;
+            /^[a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîï]+([-'\s][a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîï]+)?$/;
         let firstNameErrorMsg = firstName.nextElementSibling;
 
         if (regex.test(firstName.value) === false) {
@@ -269,7 +263,7 @@ function submitForm(e) {
     function isNomInValid(ValidField) {
         const lastName = document.querySelector("#lastName");
         const regex =
-            /^[a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîïA-ZÉÈÎÏ][a-zéèêàçîïA-ZÉÈÎÏ]+([-'\s][a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîïA-ZÉÈÎÏ]+)?$/;
+            /^[a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîï]+([-'\s][a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîï]+)?$/;
         let lastNameErrorMsg = lastName.nextElementSibling;
         if (regex.test(lastName.value) === false) {
             lastNameErrorMsg.innerHTML = " Veuillez renseigner votre nom.";
@@ -309,7 +303,7 @@ function submitForm(e) {
     function isCityInValid(ValidField) {
         const city = document.querySelector("#city");
         const regex =
-            /^[a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîïA-ZÉÈÎÏ][a-zéèêàçîïA-ZÉÈÎÏ]+([-'\s][a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîïA-ZÉÈÎÏ]+)?$/;
+            /^[a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîï]+([-'\s][a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîï]+)?$/;
         let cityErrorMsg = city.nextElementSibling;
         if (regex.test(city.value) === false) {
             cityErrorMsg.innerHTML = " Veuillez renseigner votre ville.";

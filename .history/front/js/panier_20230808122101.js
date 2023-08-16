@@ -226,17 +226,15 @@ function submitForm(e) {
             )
             .catch((data) => console.log(data));
     }
-
-    let isAlertShown = false;
-
+    
     function isFormInValid() {
         const form = document.querySelector(".cart__order__form");
         const inputs = form.querySelectorAll("input");
         let isValidForm = true;
         inputs.forEach((input) => {
             if (input.value === "") {
-                alert("Veuillez remplir tous les champs.");
-                isAlertShown = true;
+                alert("Veuillez remplir tous les champs");
+                isValidForm = false;
             }
         });
         if (!isValidForm) {
@@ -254,7 +252,7 @@ function submitForm(e) {
     function isPrenomInValid(ValidField) {
         const firstName = document.querySelector("#firstName");
         const regex =
-            /^[a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîïA-ZÉÈÎÏ][a-zéèêàçîïA-ZÉÈÎÏ]+([-'\s][a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîïA-ZÉÈÎÏ]+)?$/;
+            /^[a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîï]+([-'\s][a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîï]+)?$/;
         let firstNameErrorMsg = firstName.nextElementSibling;
 
         if (regex.test(firstName.value) === false) {
@@ -269,7 +267,7 @@ function submitForm(e) {
     function isNomInValid(ValidField) {
         const lastName = document.querySelector("#lastName");
         const regex =
-            /^[a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîïA-ZÉÈÎÏ][a-zéèêàçîïA-ZÉÈÎÏ]+([-'\s][a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîïA-ZÉÈÎÏ]+)?$/;
+            /^[a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîï]+([-'\s][a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîï]+)?$/;
         let lastNameErrorMsg = lastName.nextElementSibling;
         if (regex.test(lastName.value) === false) {
             lastNameErrorMsg.innerHTML = " Veuillez renseigner votre nom.";
@@ -309,7 +307,7 @@ function submitForm(e) {
     function isCityInValid(ValidField) {
         const city = document.querySelector("#city");
         const regex =
-            /^[a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîïA-ZÉÈÎÏ][a-zéèêàçîïA-ZÉÈÎÏ]+([-'\s][a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîïA-ZÉÈÎÏ]+)?$/;
+            /^[a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîï]+([-'\s][a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîï]+)?$/;
         let cityErrorMsg = city.nextElementSibling;
         if (regex.test(city.value) === false) {
             cityErrorMsg.innerHTML = " Veuillez renseigner votre ville.";

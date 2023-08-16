@@ -27,7 +27,7 @@ await Promise.all(
     (panierObject ?? []).map(async (panier, index) => {
         const product = await getProduct(panier.id);
 
-        contenuItem.innerHTML += ` <article class="cart__item" data-id="${panier.id}" data-color="${panier.color}">
+        contenuItem.innerHTML = ` <article class="cart__item" data-id="${panier.id}" data-color="${panier.color}">
     <div class="cart__item__img">
      <img src="${product.imageUrl}" alt="${product.altTxt}">
      </div>
